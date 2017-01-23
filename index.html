@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<!-- © 2016 Erik Koopmans -->
+<html>
+	<head>
+		<title>Skyscanner</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="lib/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="lib/search/search.css" rel="stylesheet" type="text/css">
+		<link href="css/skyscanner.css" rel="stylesheet" type="text/css">
+
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+
+		<script src="lib/jquery-2.2.0.min.js"></script>
+		<script src="lib/bootstrap.min.js"></script>
+		<script src="js/object-watch.js"></script>
+		<script src="js/skyscanner.js"></script>
+		<script src="js/webproxy.js"></script>
+
+		<script>
+			function minCost(data) {
+				if (data.Quotes == null || data.Quotes.length == 0)
+					return;
+
+				var min=data.Quotes[0].MinPrice, minInd=0;
+				for (var i=1; i<data.Quotes.length; i++) {
+					if (data.Quotes[i].MinPrice < min) {
+						min = data.Quotes[i].MinPrice;
+						minInd = i;
+					}
+				}
+
+				console.log(min);
+			}
+
+			function test() {
+				var outboundPartialDate = 'anytime';
+				skyscanner.getQuote(minCost, a.id, b.id, outboundPartialDate);
+			}
+
+			var a = new skyscanner.Place(document.body);
+			var b = new skyscanner.Place(document.body);
+			a.watch('id', test);
+			b.watch('id', test);
+		</script>
+
+	</body>
+</html>
